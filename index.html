@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>APP</title>
+    <meta name="Keywords" content="APP"/>
+    <meta name="Description" content="APP"/>
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <link rel="stylesheet" href="css/index.css"/>
+    <link rel="stylesheet" href="layui/css/layui.css"/>
+    <!-- <link rel="stylesheet" href="css/bulma.min.css"/> -->
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+</head>
+
+<body class="page">
+<div class="layui-tab layui-tab-brief">
+    <ul class="layui-tab-title">
+        <li class="layui-this">网站设置</li>
+        <li>用户管理</li>
+    </ul>
+    <div class="layui-tab-content" style="height: 100px;">
+        <div class="layui-tab-item layui-show">
+            <button id="save">
+                    save!!!
+            </button>
+            <button id="search">
+                search!!!
+            </button>
+            <table class="table is-bordered is-striped">
+                <thead>
+                    <tr>
+                        <th>渠道</th>
+                        <th>最新版本</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><a href="https://www.baidu.com" target="_blank">iOS</a></th>
+                        <th id="IOS"></th>
+                    </tr>
+                    <tr>
+                        <th>应用宝</th>
+                        <th id="YINGYONGBAO"></th>
+                    </tr>
+                    <tr>
+                        <th>小米</th>
+                        <th id="XIAOMI"></th>
+                    </tr>
+                    <tr>
+                        <th>华为</th>
+                        <th id="HUAWEI"></th>
+                    </tr>
+                    <tr>
+                        <th>魅族</th>
+                        <th id="MEIZU"></th>
+                    </tr>
+                    <tr>
+                        <th>百度</th>
+                        <th id="BAIDU"></th>
+                    </tr>
+                    <tr>
+                        <th>搜狗</th>
+                        <th id="SOUGOU"></th>
+                    </tr>
+            
+            </table>
+        </div>
+        <div class="layui-tab-item">
+            <form class="layui-form layui-form-pane" action="" lay-filter="example">
+                <div class="layui-form-item">
+                    <label id="labelName" class="layui-form-label">应用名</label>
+                    <div class="layui-input-inline">
+                        <input id="appName" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div> 
+                    <button id="search-btn" type="button" class="layui-btn layui-btn-radius layui-btn-disabled">搜索</button>
+                </div>    
+
+                            
+
+                
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入框</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="js/index.js"></script>
+<script src="layui/layui.js"></script>
+<script src="js/initLayui.js"></script>
+</body>
+</html>

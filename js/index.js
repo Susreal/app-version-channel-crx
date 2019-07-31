@@ -3,7 +3,7 @@ var appInfo = {
     apkName: "com.cccampus.younglife",
     huaweiId: "C100295325",
     baiduId: "26255558",
-    sougouId: "133496"
+    sougouId: "667320"
 }
 
 var allShops = [
@@ -125,7 +125,7 @@ $("#save").click(function() {
         apkName: "com.cccampus.younglife",
         huaweiId: "C100295325",
         baiduId: "26255558",
-        sougouId: "133496"
+        sougouId: "667320"
     }
     chrome.storage.local.set({'app_version_in_shops_info': tInfo}, function() {
         console.log('保存成功!!!');
@@ -139,3 +139,11 @@ $("#search").click(function() {
         }
     });
 });
+
+
+document.body.onload = function() {
+    //表单初始赋值
+// form.val('example', {
+//     "username": "贤心"
+//   });
+}
