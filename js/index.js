@@ -180,12 +180,15 @@ $("#save").click(function() {
     });
 }); 
 
+
+
+
 function updateForm(layer_filter, name, value) {
-    layui.use(['form'], function(){
-        var form = layui.form;
-        form.val(layer_filter, {
-            name: value
-        });
+    var form = layui.form;
+    let temp = name;
+    form.val(layer_filter, {
+        temp: value,
+        "SHOP_MI" : "TTT"
     });
 }
 
@@ -200,11 +203,11 @@ $("#search").click(function() {
         for(let i=0; i<ttt.shop_info.length; i++) {
             console.log(ttt.shop_info[i].id);
             console.log(ttt.shop_info[i].url);
-            updateForm("shops",ttt.shop_info[i].id,ttt.shop_info[i].url);
+            let id = ttt.shop_info[i].id;
+            let url = ttt.shop_info[i].url;
+            updateForm("shops", id, url);
         }
-
     });
-    updateForm("shops","SHOP_IOS","LALALAL");
 });
 
 
