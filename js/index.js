@@ -6,7 +6,7 @@ var appInfo = {
     sougouId: "667320"
 }
 
-var default_app_info = {
+var app_info = {
     app_name: "yaktalk",
     shop_info: [
         {
@@ -57,15 +57,10 @@ var allShops = [
     "SOUGOU"
 ]
 
-function updateTable(id, text) {
-    let th = document.getElementById(id);
-    if(th) th.innerText = text;
-}
-
 function updateLatestVerion(appInfo, shopName) {
     let latestVerion = "0.0.0";
 
-    updateTable(shopName, "loading...");
+    updateTextById(shopName, "loading...");
 
     switch(shopName) {
         case "IOS":
@@ -76,7 +71,7 @@ function updateLatestVerion(appInfo, shopName) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".whats-new__latest__version");
                     if (data.length>0) latestVerion = data[0].innerText.substring(2);
-                    updateTable(shopName, latestVerion);
+                    updateTextById(shopName, latestVerion);
                 }
             });
             break;
@@ -88,7 +83,7 @@ function updateLatestVerion(appInfo, shopName) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".det-othinfo-data");
                     if (data.length>0) latestVerion = data[0].innerText.substring(1);
-                    updateTable(shopName, latestVerion);
+                    updateTextById(shopName, latestVerion);
                 }
             });
             break;
@@ -100,7 +95,7 @@ function updateLatestVerion(appInfo, shopName) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".cf > .weight-font + li");
                     if (data.length>0) latestVerion = data[1].innerText;
-                    updateTable(shopName, latestVerion);
+                    updateTextById(shopName, latestVerion);
                 }
             });
             break;
@@ -112,7 +107,7 @@ function updateLatestVerion(appInfo, shopName) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".app-info-ul > .ul-li-detail > span");
                     if (data.length>0) latestVerion = data[3].innerText;
-                    updateTable(shopName, latestVerion);
+                    updateTextById(shopName, latestVerion);
                 }
             });
             break;
@@ -124,7 +119,7 @@ function updateLatestVerion(appInfo, shopName) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".app_content");
                     if (data.length>0) latestVerion = data[3].innerText;
-                    updateTable(shopName, latestVerion);
+                    updateTextById(shopName, latestVerion);
                 }
             });
             break;
@@ -136,7 +131,7 @@ function updateLatestVerion(appInfo, shopName) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".detail > .version");
                     if (data.length>0) latestVerion = data[0].innerText.substring(3);
-                    updateTable(shopName, latestVerion);
+                    updateTextById(shopName, latestVerion);
                 }
             });
             break;
@@ -151,7 +146,7 @@ function updateLatestVerion(appInfo, shopName) {
                         let splitText = data[1].innerText.split("：");
                         if (splitText.length>0) latestVerion = splitText[splitText.length-1].trim();
                     }
-                    updateTable(shopName, latestVerion);
+                    updateTextById(shopName, latestVerion);
                 }
             });
             break;
@@ -171,26 +166,10 @@ $("#save").click(function() {
     chrome.storage.local.set({'app_version_in_shops_info': tInfo}, function() {
         console.log('保存成功!!!');
     });
-    chrome.storage.local.set({'app_version_in_shops_info_all': default_app_info}, function() {
-        chrome.storage.local.get(['app_version_in_shops_info_all'], function(result) {
-            let ttt = result.app_version_in_shops_info_all;
-            console.log(ttt.app_name);
-            console.log(ttt.shop_info.length);
-        });
+    chrome.storage.local.set({'app_info': app_info}, function() {
+        console.log('保存成功!!!');
     });
-}); 
-
-
-
-
-function updateForm(layer_filter, name, value) {
-    var form = layui.form;
-    let temp = name;
-    form.val(layer_filter, {
-        temp: value,
-        "SHOP_MI" : "TTT"
-    });
-}
+});
 
 $("#search").click(function() {
     chrome.storage.local.get(['app_version_in_shops_info'], function(aInfo) {
@@ -198,22 +177,14 @@ $("#search").click(function() {
             updateLatestVerion(aInfo.app_version_in_shops_info, allShops[i]);
         }
     });
-    chrome.storage.local.get(['app_version_in_shops_info_all'], function(result) {
-        let ttt = result.app_version_in_shops_info_all;
+    chrome.storage.local.get(['app_info'], function(result) {
+        let ttt = result.app_info;
         for(let i=0; i<ttt.shop_info.length; i++) {
             console.log(ttt.shop_info[i].id);
             console.log(ttt.shop_info[i].url);
             let id = ttt.shop_info[i].id;
             let url = ttt.shop_info[i].url;
-            updateForm("shops", id, url);
+            updateInputByName(id, url);
         }
     });
 });
-
-
-document.body.onload = function() {
-    //表单初始赋值
-// form.val('example', {
-//     "username": "贤心"
-//   });
-}

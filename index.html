@@ -13,6 +13,7 @@
     <!-- <link rel="stylesheet" href="css/bulma.min.css"/> -->
 
     <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/utils.js"></script>
 </head>
 
 <body class="page">
@@ -69,6 +70,12 @@
             </table>
         </div>
         <div class="layui-tab-item">
+            <table id="shops" lay-filter="test"></table>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            </script>
+
+
             <form class="layui-form layui-form-pane" action="" lay-filter="search">
                 <div class="layui-form-item">
                     <label id="label-name" class="layui-form-label">应用名</label>
@@ -82,43 +89,43 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label shops-info-form-label">iOS</label>
                     <div class="layui-input-block">
-                        <input type="text" name="SHOP_IOS" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input">
+                        <input type="text" name="SHOP_IOS" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label shops-info-form-label">应用宝</label>
                     <div class="layui-input-block">
-                        <input type="text" name="SHOP_YYB" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input">
+                        <input type="text" name="SHOP_YYB" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label shops-info-form-label">小米</label>
                     <div class="layui-input-block">
-                        <input type="text" name="SHOP_MI" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input">
+                        <input type="text" name="SHOP_MI" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label shops-info-form-label">华为</label>
                     <div class="layui-input-block">
-                        <input type="text" name="SHOP_HW" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input">
+                        <input type="text" name="SHOP_HW" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label shops-info-form-label">魅族</label>
                     <div class="layui-input-block">
-                        <input type="text" name="SHOP_MZ" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input">
+                        <input type="text" name="SHOP_MZ" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label shops-info-form-label">百度</label>
                     <div class="layui-input-block">
-                        <input type="text" name="SHOP_BD" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input">
+                        <input type="text" name="SHOP_BD" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label shops-info-form-label">搜狗</label>
                     <div class="layui-input-block">
-                        <input type="text" name="SHOP_SG" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input">
+                        <input type="text" name="SHOP_SG" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
                     </div>
                 </div>
             </form>
