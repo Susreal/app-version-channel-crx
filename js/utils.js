@@ -7,53 +7,89 @@ function updateTextById(id, text) {
     if(th) th.innerText = text;
 }
 
-function loadShopInfo() {
-    let shop_info = [
+function reloadShopInfo() {
+    let default_shop_info = [
         {
-            id: "SHOP_IOS",
+            shop_id: "SHOP_IOS",
             shop_name: "App Store",
-            url: "https://apps.apple.com/cn/app/id1404845879"
+            shop_url: "https://apps.apple.com/cn/app/id1404845879"
         },
         {
-            id: "SHOP_YYB",
+            shop_id: "SHOP_YYB",
             shop_name: "应用宝",
-            url: "https://sj.qq.com/myapp/detail.htm?apkName=com.cccampus.younglife"
+            shop_url: "https://sj.qq.com/myapp/detail.htm?apkName=com.cccampus.younglife"
         },
         {
-            id: "SHOP_MI",
+            shop_id: "SHOP_MI",
             shop_name: "小米",
-            url: "http://app.mi.com/details?id=com.cccampus.younglife"
+            shop_url: "http://app.mi.com/details?id=com.cccampus.younglife"
         },
         {
-            id: "SHOP_HW",
+            shop_id: "SHOP_HW",
             shop_name: "华为",
-            url: "https://appstore.huawei.com/app/C100295325"
+            shop_url: "https://appstore.huawei.com/app/C100295325"
         },
         {
-            id: "SHOP_MZ",
+            shop_id: "SHOP_MZ",
             shop_name: "魅族",
-            url: "http://app.meizu.com/apps/public/detail?package_name=com.cccampus.younglife"
+            shop_url: "http://app.meizu.com/apps/public/detail?package_name=com.cccampus.younglife"
         },
         {
-            id: "SHOP_BD",
+            shop_id: "SHOP_BD",
             shop_name: "百度",
-            url: "https://shouji.baidu.com/software/26255558.html"
+            shop_url: "https://shouji.baidu.com/software/26255558.html"
         },
         {
-            id: "SHOP_SG",
+            shop_id: "SHOP_SG",
             shop_name: "搜狗",
-            url: "http://zhushou.sogou.com/apps/detail/667320.html"
+            shop_url: "http://zhushou.sogou.com/apps/detail/667320.html"
         }
     ];
+    localStorage.setItem("shop_info",JSON.stringify(default_shop_info));
+    console.log('保存默认配置到本地缓存...');
+    return default_shop_info;
+}
 
-    chrome.storage.local.get(['shop_info'], function(result) {
-        if (result.shop_info) {
-            // 如果有缓存
-            return result.shop_info;
-        } else {
-            return shop_info;
+function loadShopInfo() {
+    let shop_info_str = localStorage.getItem("shop_info");
+    if (shop_info_str) {
+        // 如果有缓存，则返回缓存内容
+        return JSON.parse(shop_info_str);
+    }
+    else {
+        // 没有缓存就加载默认设置并存入缓存
+        return reloadShopInfo();
+    }
+}
+
+function updateShopUrlInStorage(shop_id, new_shop_url) {
+    let shop_info_str = localStorage.getItem("shop_info");
+    if (shop_info_str) {
+        // 如果有缓存，则更新
+        let new_shop_info = JSON.parse(shop_info_str);
+        for (let i=0; i<new_shop_info.length; i++) {
+            if (new_shop_info[i].shop_id == shop_id) {
+                new_shop_info[i].shop_url = String(new_shop_url);
+                localStorage.setItem("shop_info",JSON.stringify(new_shop_info));
+                console.log('更新'+shop_id+'地址到本地缓存...');
+                return true;
+            }
         }
-    });
+        return false;
+    } else {
+        // 没有缓存，无法更新
+        return false;
+    }
 
-    return shop_info;
+}
+
+// 重写localStorage的setItem方法
+var orignalSetItem = localStorage.setItem;
+localStorage.setItem = function(key,newValue){
+    var setItemEvent = new Event("setItemEvent");
+    setItemEvent.key = key;
+    setItemEvent.newValue = newValue;
+    setItemEvent.oldValue = localStorage.getItem(key);
+    window.dispatchEvent(setItemEvent);
+    orignalSetItem.apply(this,arguments);
 }

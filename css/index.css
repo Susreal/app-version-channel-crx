@@ -3,7 +3,6 @@
   height: 500px;
 }
 
-.shops-info-form-label {
-  width: 45px;
-  text-align: left;
+.table-cell-font-s {
+  font-size: 10px;
 }

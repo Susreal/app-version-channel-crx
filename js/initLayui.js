@@ -5,9 +5,29 @@ layui.use(['layer', 'form', 'element', 'table'], function(){
     ,table = layui.table;
     
     // layer.msg('Hello World');
-
     form.val('search', {
-        "title": "贤心"
+        'app_name': localStorage.getItem('app_name')
+    });
+
+    // 表单中搜索按钮的有效状态处理
+    $('#app_name').bind('input propertychange', function() {  
+        let input = $('#app_name').val();
+        if (input) {
+            $('#search-btn').removeClass('layui-btn-disabled');
+        }
+        else {
+            $('#search-btn').addClass('layui-btn-disabled');
+        }
+    });
+
+    // 监听提交
+    form.on('submit(search_app)', function(data){
+        let input = data.field.app_name;
+        if (input && !$('#search-btn').hasClass('layui-btn-disabled')) {
+            localStorage.setItem('app_name', input);
+            layer.msg(JSON.stringify(data.field));
+        }
+        return false;
     });
 
     // //默认prompt
@@ -21,24 +41,28 @@ layui.use(['layer', 'form', 'element', 'table'], function(){
     //第一个实例
     table.render({
         elem: '#shops'
-        // ,url: 'defaultTable.json' //数据接口
-        ,data: shop_info
+        ,id: 'shops'
+        ,data: loadShopInfo()
         ,cols: [[ //表头
-        {field: 'id', title: 'ID', width:50}
+        {field: 'shop_id', title: 'shop_id', width:50}
         ,{field: 'shop_name', title: '渠道', width:120}
-        ,{field: 'url', title: '爬虫链接（点击编辑）'}
+        ,{field: 'shop_url', title: '爬虫链接（点击编辑）'}
         ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:80}
         ]]
     });
 
-    // //监听单元格编辑
-    // table.on('edit(demoEvent)', function(obj){
-    //     var value = obj.value //得到修改后的值
-    //     ,data = obj.data //得到所在行所有键值
-    //     ,field = obj.field; //得到字段
-    //     layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value, {offset: 't'});
-
-    // });
+    window.addEventListener('setItemEvent', function (e) {
+        if (e.key == 'shop_info') {
+            if (e.oldValue != e.newValue) {
+                // shop_info 变化，则重新加载表格
+                let new_shop_info = JSON.parse(e.newValue);
+                console.log('shop_info变化！重新加载表格...');
+                table.reload('shops', {
+                    data: new_shop_info
+                });
+            }
+        }
+    });
 
     //监听工具条
     table.on('tool(test)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -46,50 +70,26 @@ layui.use(['layer', 'form', 'element', 'table'], function(){
         var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
         var tr = obj.tr; //获得当前行 tr 的DOM对象
         
-        if(layEvent === 'detail'){ //查看
-            //do somehing
-        } else if(layEvent === 'del'){ //删除
-            layer.confirm('真的删除行么', function(index){
-            obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-            layer.close(index);
-            //向服务端发送删除指令
-            });
-        } else if(layEvent === 'edit'){ //编辑
-            //do something
-            //默认prompt
-            layer.prompt({title: '修改网址...'}, function(val, index){
-                // layer.msg('得到了'+val);
+        if (layEvent == 'edit') { //编辑
+            layer.prompt({title: '修改网址...',value: data.shop_url}, function(val, index){
                 //同步更新缓存对应的值
-                obj.update({
-                    url: val
-                });
+                // obj.update({
+                //     shop_url: val
+                // });
                 layer.close(index);
-                tr.removeClass("layui-table-click");
+                updateShopUrlInStorage(data.shop_id, val);
+                tr.removeClass('layui-table-click');
             });
         }
     });
 });
 
 
-$('#app-name').bind('input propertychange', function() {  
-    let txt = $('#app-name').val();
-    if(txt) {
-        if ($('#search-btn').hasClass("layui-btn-disabled")) {
-            $('#search-btn').removeClass("layui-btn-disabled");
-        }
-        $('#label-name').text("valid");
-    }
-    else {
-        if (!$('#search-btn').hasClass("layui-btn-disabled")) {
-            $('#search-btn').addClass("layui-btn-disabled");
-        }
-        $('#label-name').text("invalid");
-    }
-});
+
 
 
 $('.shop_url-input').bind('input propertychange', function() {  
-    let shop_name = $(this).attr("name");
+    let shop_name = $(this).attr('name');
     console.log(typeof shop_name); //string
 
 });

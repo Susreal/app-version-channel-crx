@@ -24,8 +24,8 @@
     </ul>
     <div class="layui-tab-content" style="height: 100px;">
         <div class="layui-tab-item layui-show">
-            <button id="save">
-                    save!!!
+            <button id="reload">
+                    reload!!!
             </button>
             <button id="search">
                 search!!!
@@ -40,95 +40,51 @@
                 <tbody>
                     <tr>
                         <th><a href="https://www.baidu.com" target="_blank">iOS</a></th>
-                        <th id="IOS"></th>
+                        <th id="SHOP_IOS"></th>
                     </tr>
                     <tr>
                         <th>应用宝</th>
-                        <th id="YINGYONGBAO"></th>
+                        <th id="SHOP_YYB"></th>
                     </tr>
                     <tr>
                         <th>小米</th>
-                        <th id="XIAOMI"></th>
+                        <th id="SHOP_MI"></th>
                     </tr>
                     <tr>
                         <th>华为</th>
-                        <th id="HUAWEI"></th>
+                        <th id="SHOP_HW"></th>
                     </tr>
                     <tr>
                         <th>魅族</th>
-                        <th id="MEIZU"></th>
+                        <th id="SHOP_MZ"></th>
                     </tr>
                     <tr>
                         <th>百度</th>
-                        <th id="BAIDU"></th>
+                        <th id="SHOP_BD"></th>
                     </tr>
                     <tr>
                         <th>搜狗</th>
-                        <th id="SOUGOU"></th>
+                        <th id="SHOP_SG"></th>
                     </tr>
             
             </table>
         </div>
         <div class="layui-tab-item">
-            <table id="shops" lay-filter="test"></table>
-            <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-            </script>
-
-
             <form class="layui-form layui-form-pane" action="" lay-filter="search">
                 <div class="layui-form-item">
                     <label id="label-name" class="layui-form-label">应用名</label>
                     <div class="layui-input-inline">
-                        <input id="app-name" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                        <input id="app_name" type="text" name="app_name" lay-verify="app_name" autocomplete="off" placeholder="请输入标题" class="layui-input">
                     </div>
-                    <button id="search-btn" type="button" class="layui-btn layui-btn-disabled">搜索</button>
+                    <button id="search-btn" lay-submit lay-filter="search_app" type="button" class="layui-btn layui-btn-disabled">搜索</button>
                 </div>
             </form>
-            <form class="layui-form" action="" lay-filter="shops">
-                <div class="layui-form-item">
-                    <label class="layui-form-label shops-info-form-label">iOS</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="SHOP_IOS" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label shops-info-form-label">应用宝</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="SHOP_YYB" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label shops-info-form-label">小米</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="SHOP_MI" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label shops-info-form-label">华为</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="SHOP_HW" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label shops-info-form-label">魅族</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="SHOP_MZ" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label shops-info-form-label">百度</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="SHOP_BD" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label shops-info-form-label">搜狗</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="SHOP_SG" lay-verify="title" placeholder="请输入应用详情地址..." autocomplete="off" class="layui-input shop_url-input">
-                    </div>
-                </div>
-            </form>
+
+            <table id="shops" lay-filter="test" class="shop-info-table"></table>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            </script>
+
         </div>
     </div>
 </div>
