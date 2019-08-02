@@ -135,3 +135,79 @@ localStorage.setItem = function(key,newValue){
     window.dispatchEvent(setItemEvent);
     orignalSetItem.apply(this,arguments);
 }
+
+function getShopUrlByAppName(shop_id, app_name) {
+    switch(shop_id) {
+        case "SHOP_YYB": {
+            $.ajax({
+                type: "POST",
+                url: "https://sj.qq.com/myapp/searchAjax.htm?kw="+String(app_name)+"&pns=&sid=",
+                success: function (resp) {
+                    let pkgName = resp.obj.items[0].appDetail.pkgName;
+                    if (pkgName) updateShopUrlInStorage(shop_id, "https://sj.qq.com/myapp/detail.htm?apkName="+pkgName);
+                }
+            });
+            break;
+        }
+        case "SHOP_MI": {
+            $.ajax({
+                type: "GET",
+                url: "http://app.mi.com/searchAll?keywords="+String(app_name)+"&typeall=phone",
+                success: function (resp) {
+                    let doms = $.parseHTML(resp);
+                    let data = $(doms).find(".applist > li > a");
+                    if (data.length>0) updateShopUrlInStorage(shop_id, "http://app.mi.com"+data[0].getAttribute("href"));
+                }
+            });
+            break;
+        }
+        case "SHOP_HW": {
+            $.ajax({
+                type: "GET",
+                url: "https://appstore.huawei.com/search/"+String(app_name),
+                success: function (resp) {
+                    let doms = $.parseHTML(resp);
+                    let data = $(doms).find(".list-game-app > .game-info-ico > a");
+                    if (data.length>0) updateShopUrlInStorage(shop_id, "https://appstore.huawei.com"+data[0].getAttribute("href"));
+                }
+            });
+            break;
+        }
+        case "SHOP_MZ": {
+            $.ajax({
+                type: "GET",
+                url: "http://app.meizu.com/apps/public/search/page?cat_id=1&keyword="+String(app_name)+"&start=0&max=18",
+                success: function (resp) {
+                    let pkgName = resp.value.list[0].package_name;
+                    if (pkgName) updateShopUrlInStorage(shop_id, "http://app.meizu.com/apps/public/detail?package_name="+pkgName);
+                }
+            });
+            break;
+        }
+        case "SHOP_BD": {
+            $.ajax({
+                type: "GET",
+                url: "https://shouji.baidu.com/s?wd="+String(app_name)+"&data_type=app",
+                success: function (resp) {
+                    let doms = $.parseHTML(resp);
+                    let data = $(doms).find(".app-list > .app-outer > .app > .icon > a");
+                    if (data.length>0) updateShopUrlInStorage(shop_id, "https://shouji.baidu.com/"+data[0].getAttribute("href"));
+                }
+            });
+            break;
+        }
+        case "SHOP_SG": {
+            $.ajax({
+                type: "GET",
+                url: "http://zhushou.sogou.com/apps/search.html?key="+String(app_name),
+                success: function (resp) {
+                    let doms = $.parseHTML(resp);
+                    let data = $(doms).find(".list > li > a");
+                    if (data.length>0) updateShopUrlInStorage(shop_id, data[0].getAttribute("href"));
+                }
+            });
+            break;
+        }
+        default: break;
+    }
+}

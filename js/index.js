@@ -1,15 +1,6 @@
-function getShopUrlByAppName(shop_id, app_name) {
-    //
-}
 
-$.ajax({
-    type: "POST",
-    url: "https://sj.qq.com/myapp/searchAjax.htm?kw=yaktalk&pns=&sid=",
-    success: function (resp) {
-        //
-        console.log(resp.obj.items[0].appDetail.pkgName);
-    }
-});
+
+//layer.msg('Hello World');
 
 function updateLatestVerion2(shop_id, shop_url) {
     let latestVerion = "0.0.0";
@@ -72,29 +63,20 @@ $("#reset_btn").click(function() {
     reloadShopInfo();
 });
 
-$("#search").click(function() {
+$("#search_btn").click(function() {
+    // let shops = loadShopInfo();
+    // let app_name = loadAppName();
+    // for (let i=0; i<shops.length; i++) {
+    //     getShopUrlByAppName(shops[i].id, app_name);
+    // }
+});
+
+$("#update_btn").click(function() {
     let shops = loadShopInfo();
     for (let i=0; i<shops.length; i++) {
         updateLatestVerion2(shops[i].shop_id, shops[i].shop_url);
     }
-
-    // chrome.storage.local.get(['app_version_in_shops_info'], function(aInfo) {
-    //     for(let i=0; i<allShops.length; i++) {
-    //         updateLatestVerion(aInfo.app_version_in_shops_info, allShops[i]);
-    //     }
-    // });
-    // chrome.storage.local.get(['app_info'], function(result) {
-    //     let ttt = result.app_info;
-    //     for(let i=0; i<ttt.shop_info.length; i++) {
-    //         console.log(ttt.shop_info[i].id);
-    //         console.log(ttt.shop_info[i].url);
-    //         let id = ttt.shop_info[i].id;
-    //         let url = ttt.shop_info[i].url;
-    //         updateInputByName(id, url);
-    //     }
-    // });
 });
-
 
 let shops = loadShopInfo();
 for (let i=0; i<shops.length; i++) {

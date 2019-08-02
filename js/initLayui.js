@@ -24,7 +24,14 @@ layui.use(['layer', 'form', 'element', 'table'], function(){
     form.on('submit(search_app)', function(data){
         let input = data.field.app_name;
         if (input && !$('#search_btn').hasClass('layui-btn-disabled')) {
+            // layer.msg(input);
             localStorage.setItem('app_name', input);
+            let shops = loadShopInfo();
+            let app_name = loadAppName();
+            layer.msg(app_name);
+            for (let i=0; i<shops.length; i++) {
+                getShopUrlByAppName(shops[i].shop_id, app_name);
+            }
         }
         return false;
     });
