@@ -1,7 +1,20 @@
+function getShopUrlByAppName(shop_id, app_name) {
+    //
+}
+
+$.ajax({
+    type: "POST",
+    url: "https://sj.qq.com/myapp/searchAjax.htm?kw=yaktalk&pns=&sid=",
+    success: function (resp) {
+        //
+        console.log(resp.obj.items[0].appDetail.pkgName);
+    }
+});
+
 function updateLatestVerion2(shop_id, shop_url) {
     let latestVerion = "0.0.0";
 
-    updateTextById(shop_id, "loading...");
+    updateLatestVersionInStorage(shop_id, "loading...");
 
     $.ajax({
         type: "GET",
@@ -50,12 +63,12 @@ function updateLatestVerion2(shop_id, shop_url) {
                 default:
                     break;
             } 
-            updateTextById(shop_id, latestVerion);
+            updateLatestVersionInStorage(shop_id, latestVerion);
         }
     });
 }
 
-$("#reload").click(function() {
+$("#reset_btn").click(function() {
     reloadShopInfo();
 });
 
@@ -83,8 +96,7 @@ $("#search").click(function() {
 });
 
 
-// window.addEventListener("setItemEvent", function (e) {
-//     console.log('key: '+e.key);
-//     console.log('newValue: '+e.newValue);
-//     console.log('oldValue: '+e.oldValue);
-// });
+let shops = loadShopInfo();
+for (let i=0; i<shops.length; i++) {
+    updateLatestVerion2(shops[i].shop_id, shops[i].shop_url);
+}
