@@ -136,7 +136,9 @@ localStorage.setItem = function(key,newValue){
     orignalSetItem.apply(this,arguments);
 }
 
-function getShopUrlByAppName(shop_id, app_name) {
+// 按照app_name搜索各应用市场的url并更新至storage
+// updateLatestVersion为true，则同时更新最新版本号
+function getShopUrlByAppName(shop_id, app_name, updateLatestVersion=false) {
     switch(shop_id) {
         case "SHOP_YYB": {
             $.ajax({
@@ -144,7 +146,11 @@ function getShopUrlByAppName(shop_id, app_name) {
                 url: "https://sj.qq.com/myapp/searchAjax.htm?kw="+String(app_name)+"&pns=&sid=",
                 success: function (resp) {
                     let pkgName = resp.obj.items[0].appDetail.pkgName;
-                    if (pkgName) updateShopUrlInStorage(shop_id, "https://sj.qq.com/myapp/detail.htm?apkName="+pkgName);
+                    if (pkgName) {
+                        let shop_url = "https://sj.qq.com/myapp/detail.htm?apkName="+pkgName;
+                        updateShopUrlInStorage(shop_id, shop_url);
+                        if (updateLatestVersion) updateLatestVerion2(shop_id, shop_url);
+                    }
                 }
             });
             break;
@@ -156,7 +162,11 @@ function getShopUrlByAppName(shop_id, app_name) {
                 success: function (resp) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".applist > li > a");
-                    if (data.length>0) updateShopUrlInStorage(shop_id, "http://app.mi.com"+data[0].getAttribute("href"));
+                    if (data.length>0) {
+                        let shop_url = "http://app.mi.com"+data[0].getAttribute("href");
+                        updateShopUrlInStorage(shop_id, shop_url);
+                        if (updateLatestVersion) updateLatestVerion2(shop_id, shop_url);
+                    }
                 }
             });
             break;
@@ -168,7 +178,11 @@ function getShopUrlByAppName(shop_id, app_name) {
                 success: function (resp) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".list-game-app > .game-info-ico > a");
-                    if (data.length>0) updateShopUrlInStorage(shop_id, "https://appstore.huawei.com"+data[0].getAttribute("href"));
+                    if (data.length>0) {
+                        let shop_url = "https://appstore.huawei.com"+data[0].getAttribute("href");
+                        updateShopUrlInStorage(shop_id, shop_url);
+                        if (updateLatestVersion) updateLatestVerion2(shop_id, shop_url);
+                    }
                 }
             });
             break;
@@ -179,7 +193,11 @@ function getShopUrlByAppName(shop_id, app_name) {
                 url: "http://app.meizu.com/apps/public/search/page?cat_id=1&keyword="+String(app_name)+"&start=0&max=18",
                 success: function (resp) {
                     let pkgName = resp.value.list[0].package_name;
-                    if (pkgName) updateShopUrlInStorage(shop_id, "http://app.meizu.com/apps/public/detail?package_name="+pkgName);
+                    if (pkgName) {
+                        let shop_url = "http://app.meizu.com/apps/public/detail?package_name="+pkgName;
+                        updateShopUrlInStorage(shop_id, shop_url);
+                        if (updateLatestVersion) updateLatestVerion2(shop_id, shop_url);
+                    }
                 }
             });
             break;
@@ -191,7 +209,11 @@ function getShopUrlByAppName(shop_id, app_name) {
                 success: function (resp) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".app-list > .app-outer > .app > .icon > a");
-                    if (data.length>0) updateShopUrlInStorage(shop_id, "https://shouji.baidu.com/"+data[0].getAttribute("href"));
+                    if (data.length>0) {
+                        let shop_url = "https://shouji.baidu.com/"+data[0].getAttribute("href");
+                        updateShopUrlInStorage(shop_id, shop_url);
+                        if (updateLatestVersion) updateLatestVerion2(shop_id, shop_url);
+                    }
                 }
             });
             break;
@@ -203,7 +225,11 @@ function getShopUrlByAppName(shop_id, app_name) {
                 success: function (resp) {
                     let doms = $.parseHTML(resp);
                     let data = $(doms).find(".list > li > a");
-                    if (data.length>0) updateShopUrlInStorage(shop_id, data[0].getAttribute("href"));
+                    if (data.length>0) {
+                        let shop_url = data[0].getAttribute("href");
+                        updateShopUrlInStorage(shop_id, shop_url);
+                        if (updateLatestVersion) updateLatestVerion2(shop_id, shop_url);
+                    }
                 }
             });
             break;

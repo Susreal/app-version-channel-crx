@@ -68,6 +68,8 @@ $("#search_btn").click(function() {
 });
 
 $("#update_btn").click(function() {
+    // $(this).removeClass("layui-icon-refresh-3");
+    // $(this).addClass("layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop");
     let shops = loadShopInfo();
     for (let i=0; i<shops.length; i++) {
         updateLatestVerion2(shops[i].shop_id, shops[i].shop_url);
