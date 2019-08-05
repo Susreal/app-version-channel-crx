@@ -28,7 +28,7 @@ layui.use(['layer', 'form', 'element', 'table'], function(){
             localStorage.setItem('app_name', input);
             let shops = loadShopInfo();
             let app_name = loadAppName();
-            layer.msg(app_name);
+            // layer.msg(app_name);
             for (let i=0; i<shops.length; i++) {
                 getShopUrlByAppName(shops[i].shop_id, app_name);
             }
@@ -84,3 +84,30 @@ layui.use(['layer', 'form', 'element', 'table'], function(){
         }
     });
 });
+
+function checkUpdate() {
+    $.get("manifest.json", function(manifest){
+        let current_version = manifest.version;
+        $.ajax({
+            type: "GET",
+            url: manifest.check_update_url,
+            dataType: "json",
+            success: function (resp) {
+                let latest_version = resp.latest_version;
+                console.log(compareVersion(current_version, latest_version));
+                if (compareVersion(latest_version, current_version)>0) {
+                    layer.msg('检测到新版本:'+latest_version+'！！！', {
+                        time: 0 //不自动关闭
+                        ,btn: ['立即更新', '继续使用']
+                        ,yes: function(index){
+                            layer.close(index);
+                            window.open(manifest.gitHub_homePage, "_blank");
+                        }
+                    });
+                }
+            }
+        });
+    }); 
+}
+
+checkUpdate();

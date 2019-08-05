@@ -1,7 +1,3 @@
-
-
-//layer.msg('Hello World');
-
 function updateLatestVerion2(shop_id, shop_url) {
     let latestVerion = "0.0.0";
 
@@ -82,3 +78,5 @@ let shops = loadShopInfo();
 for (let i=0; i<shops.length; i++) {
     updateLatestVerion2(shops[i].shop_id, shops[i].shop_url);
 }
+
+checkUpdate();

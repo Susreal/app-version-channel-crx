@@ -211,3 +211,32 @@ function getShopUrlByAppName(shop_id, app_name) {
         default: break;
     }
 }
+
+// 版本号比较
+// 0代表相等，1代表左边大，-1代表右边大
+function compareVersion(v1, v2) {
+    let v1Array = String(v1).split(".");
+    let v2Array = String(v2).split(".");
+    let minLength = Math.min(v1Array.length, v2Array.length);
+    let index = 0;
+    let diff = 0;
+
+    while (index < minLength && (diff = parseInt(v1Array[index]) - parseInt(v2Array[index])) == 0) {
+        index++;
+    }
+    if (diff == 0) {
+        for (let i = index; i < v1Array.length; i++) {
+            if (parseInt(v1Array[i]) > 0) {
+                return 1;
+            }
+        } 
+        for (let i = index; i < v2Array.length; i++) {
+            if (parseInt(v2Array[i]) > 0) {
+                return -1;
+            }
+        }
+        return 0;
+    } else {
+        return diff > 0 ? 1 : -1;
+    }
+}
