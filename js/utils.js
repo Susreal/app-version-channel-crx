@@ -50,6 +50,12 @@ function reloadShopInfo() {
             shop_name: "搜狗",
             shop_url: "http://zhushou.sogou.com/apps/detail/667320.html",
             latest_version: "0.0.0"
+        },
+        {
+            shop_id: "SHOP_SX",
+            shop_name: "三星",
+            shop_url: "http://apps.galaxyappstore.com/detail/com.cccampus.younglife",
+            latest_version: "0.0.0"
         }
     ];
     localStorage.setItem("shop_info",JSON.stringify(default_shop_info));
@@ -227,6 +233,21 @@ function getShopUrlByAppName(shop_id, app_name, updateLatestVersion=false) {
                     let data = $(doms).find(".list > li > a");
                     if (data.length>0) {
                         let shop_url = data[0].getAttribute("href");
+                        updateShopUrlInStorage(shop_id, shop_url);
+                        if (updateLatestVersion) updateLatestVerion2(shop_id, shop_url);
+                    }
+                }
+            });
+            break;
+        }
+        case "SHOP_SX": {
+            $.ajax({
+                type: "POST",
+                url: "https://sj.qq.com/myapp/searchAjax.htm?kw="+String(app_name)+"&pns=&sid=",
+                success: function (resp) {
+                    let pkgName = resp.obj.items[0].appDetail.pkgName;
+                    if (pkgName) {
+                        let shop_url = "http://apps.galaxyappstore.com/detail/"+pkgName;
                         updateShopUrlInStorage(shop_id, shop_url);
                         if (updateLatestVersion) updateLatestVerion2(shop_id, shop_url);
                     }

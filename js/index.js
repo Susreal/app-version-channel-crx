@@ -47,6 +47,14 @@ function updateLatestVerion2(shop_id, shop_url) {
                     }
                     break;
                 }
+                case "SHOP_SX": {
+                    let data = $(doms).find(".information > .items > .item");
+                    if (data.length>0) {
+                        let splitText = data[0].innerText.trim().split("(");
+                        if (splitText.length>0) latestVerion = splitText[0].substring(2).trim();
+                    }
+                    break;
+                }
                 default:
                     break;
             } 
